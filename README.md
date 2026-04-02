@@ -10,7 +10,7 @@ Since vibe coding took off, thousands of web apps have been shipped overnight. B
 
 React Native is a mature, open-source cross-platform framework powering countless productivity and utility apps in production. This boilerplate gives you a clean, working starting point so you can skip the setup grind and go straight to building what matters.
 
-Clone it. Run it. Ship your idea.
+Fork it. Run it. Ship your idea.
 
 > **모바일 앱 세팅에 시간 낭비하지 마세요. 진짜 문제에 집중하세요.**
 >
@@ -18,7 +18,7 @@ Clone it. Run it. Ship your idea.
 >
 > React Native는 수많은 생산성 앱과 유틸리티 앱이 채택하고 있는 성숙한 크로스 플랫폼 오픈소스 프레임워크입니다. 이 보일러플레이트는 깔끔하게 작동하는 출발점을 제공해서, 세팅과의 씨름을 건너뛰고 중요한 것을 바로 만들 수 있게 해줍니다.
 >
-> 클론하고. 실행하고. 당신의 아이디어를 세상에 내보내세요.
+> 포크하고. 실행하고. 당신의 아이디어를 세상에 내보내세요.
 
 ---
 
@@ -48,19 +48,17 @@ A production-ready React Native boilerplate powered by Expo SDK 54 -- clone, ins
 
 ## Quick Start
 
+1. **Fork** this repo -- click the "Fork" button at the top right of this page
+2. **Clone** your fork and start building:
+
 ```bash
-# Clone the repo
-git clone https://github.com/jooddang/oh-my-rn.git
+git clone https://github.com/YOUR_USERNAME/oh-my-rn.git
 cd oh-my-rn
-
-# Install dependencies
 npm install
-
-# Start the dev server (Expo Go)
 npm start
 ```
 
-Press `i` for iOS simulator, `a` for Android emulator, or scan the QR code with Expo Go on a physical device.
+3. Press `i` for iOS simulator, `a` for Android emulator, or scan the QR code with Expo Go on a physical device.
 
 ## Running the App
 
