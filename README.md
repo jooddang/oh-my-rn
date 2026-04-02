@@ -1,5 +1,9 @@
 # oh-my-rn
 
+<p align="center">
+  <img src="assets/images/icon.png" alt="oh-my-rn mascot" width="180" />
+</p>
+
 **Stop wrestling with mobile app setup. Start solving your problem.**
 
 Since vibe coding took off, thousands of web apps have been shipped overnight. But mobile apps? Not so much. There's a reason for that -- building a mobile app still has real barriers. Simulators, native toolchains, build configs, signing, platform quirks -- none of it is obvious, and none of it is your actual problem.
