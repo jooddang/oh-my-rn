@@ -22,6 +22,14 @@ Fork it. Run it. Ship your idea.
 
 ---
 
+## Testimonials
+
+> "As someone with zero app development experience, I was intimidated by the idea of building a mobile app from scratch. oh-my-rn completely changed that. With just a few prompts, I went from nothing to a fully functional AI-powered iOS app in just 3 hours — no prior React Native knowledge required. The boilerplate is thoughtfully structured in a way that AI tools can immediately understand and build on top of. It genuinely felt like having a head start I didn't know I needed. Highly recommend it to anyone who wants to build fast without getting lost in setup."
+>
+> — **JY**
+
+---
+
 A production-ready React Native boilerplate powered by Expo SDK 54 -- clone, install, and run on both platforms in under a minute.
 
 ## Prerequisites
