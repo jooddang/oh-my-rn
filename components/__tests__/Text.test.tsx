@@ -9,13 +9,13 @@ function renderWithTheme(ui: React.ReactElement) {
 }
 
 describe('Text', () => {
-  it('renders children', () => {
-    renderWithTheme(<Text>Hello World</Text>);
+  it('renders children', async () => {
+    await renderWithTheme(<Text>Hello World</Text>);
     expect(screen.getByText('Hello World')).toBeTruthy();
   });
 
-  it('defaults to body variant', () => {
-    renderWithTheme(<Text>Body text</Text>);
+  it('defaults to body variant', async () => {
+    await renderWithTheme(<Text>Body text</Text>);
     const el = screen.getByText('Body text');
     const style = Array.isArray(el.props.style)
       ? Object.assign({}, ...el.props.style.filter(Boolean))
@@ -24,8 +24,8 @@ describe('Text', () => {
     expect(style.fontSize).toBe(16);
   });
 
-  it('applies h1 variant with larger fontSize', () => {
-    renderWithTheme(<Text variant="h1">Heading</Text>);
+  it('applies h1 variant with larger fontSize', async () => {
+    await renderWithTheme(<Text variant="h1">Heading</Text>);
     const el = screen.getByText('Heading');
     const style = Array.isArray(el.props.style)
       ? Object.assign({}, ...el.props.style.filter(Boolean))
@@ -34,8 +34,8 @@ describe('Text', () => {
     expect(style.fontSize).toBe(32);
   });
 
-  it('applies h2 variant with medium fontSize', () => {
-    renderWithTheme(<Text variant="h2">SubHeading</Text>);
+  it('applies h2 variant with medium fontSize', async () => {
+    await renderWithTheme(<Text variant="h2">SubHeading</Text>);
     const el = screen.getByText('SubHeading');
     const style = Array.isArray(el.props.style)
       ? Object.assign({}, ...el.props.style.filter(Boolean))
@@ -44,8 +44,8 @@ describe('Text', () => {
     expect(style.fontSize).toBe(24);
   });
 
-  it('applies caption variant with small fontSize', () => {
-    renderWithTheme(<Text variant="caption">Fine print</Text>);
+  it('applies caption variant with small fontSize', async () => {
+    await renderWithTheme(<Text variant="caption">Fine print</Text>);
     const el = screen.getByText('Fine print');
     const style = Array.isArray(el.props.style)
       ? Object.assign({}, ...el.props.style.filter(Boolean))
@@ -54,16 +54,18 @@ describe('Text', () => {
     expect(style.fontSize).toBe(12);
   });
 
-  it('each variant has a different fontSize', () => {
+  it('each variant has a different fontSize', async () => {
     const sizes: number[] = [];
     for (const variant of ['h1', 'h2', 'body', 'caption'] as const) {
-      const { unmount } = renderWithTheme(<Text variant={variant}>{variant}</Text>);
-      const el = screen.getByText(variant);
+      const { getByText, unmount } = await renderWithTheme(
+        <Text variant={variant}>{variant}</Text>,
+      );
+      const el = getByText(variant);
       const style = Array.isArray(el.props.style)
         ? Object.assign({}, ...el.props.style.filter(Boolean))
         : el.props.style;
       sizes.push(style.fontSize);
-      unmount();
+      await unmount();
     }
     // All 4 sizes should be unique
     expect(new Set(sizes).size).toBe(4);

@@ -9,41 +9,41 @@ function renderWithTheme(ui: React.ReactElement) {
 }
 
 describe('Button', () => {
-  it('renders without crashing', () => {
-    renderWithTheme(<Button title="Press me" onPress={() => {}} />);
+  it('renders without crashing', async () => {
+    await renderWithTheme(<Button title="Press me" onPress={() => {}} />);
     expect(screen.getByText('Press me')).toBeTruthy();
   });
 
-  it('fires onPress when pressed', () => {
+  it('fires onPress when pressed', async () => {
     const onPress = jest.fn();
-    renderWithTheme(<Button title="Tap" onPress={onPress} />);
+    await renderWithTheme(<Button title="Tap" onPress={onPress} />);
     fireEvent.press(screen.getByText('Tap'));
     expect(onPress).toHaveBeenCalledTimes(1);
   });
 
-  it('does not fire onPress when disabled', () => {
+  it('does not fire onPress when disabled', async () => {
     const onPress = jest.fn();
-    renderWithTheme(<Button title="Nope" onPress={onPress} disabled />);
+    await renderWithTheme(<Button title="Nope" onPress={onPress} disabled />);
     fireEvent.press(screen.getByText('Nope'));
     expect(onPress).not.toHaveBeenCalled();
   });
 
-  it('shows ActivityIndicator when loading', () => {
-    renderWithTheme(<Button title="Loading" onPress={() => {}} loading />);
+  it('shows ActivityIndicator when loading', async () => {
+    await renderWithTheme(<Button title="Loading" onPress={() => {}} loading />);
     // Title should not be visible when loading
     expect(screen.queryByText('Loading')).toBeNull();
   });
 
-  it('does not fire onPress when loading', () => {
+  it('does not fire onPress when loading', async () => {
     const onPress = jest.fn();
-    const { toJSON } = renderWithTheme(<Button title="Wait" onPress={onPress} loading />);
+    const { toJSON } = await renderWithTheme(<Button title="Wait" onPress={onPress} loading />);
     // The Pressable is disabled when loading, so press should not fire
     const tree = JSON.stringify(toJSON());
     expect(tree).toContain('ActivityIndicator');
   });
 
-  it('applies reduced opacity when disabled', () => {
-    const { toJSON } = renderWithTheme(<Button title="Dim" onPress={() => {}} disabled />);
+  it('applies reduced opacity when disabled', async () => {
+    const { toJSON } = await renderWithTheme(<Button title="Dim" onPress={() => {}} disabled />);
     const tree = JSON.stringify(toJSON());
     expect(tree).toContain('"opacity":0.5');
   });

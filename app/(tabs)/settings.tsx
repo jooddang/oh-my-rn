@@ -55,7 +55,7 @@ export default function SettingsScreen(): React.JSX.Element {
           Version {appVersion}
         </Text>
         <Text variant="caption" style={styles.footer}>
-          Built with Expo SDK 54
+          Built with Expo SDK 57
         </Text>
       </Card>
     </Screen>

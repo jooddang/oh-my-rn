@@ -1,5 +1,5 @@
-import { deleteSecureItem, getSecureItem, setSecureItem } from '@/lib/secureStorage';
 import * as SecureStore from 'expo-secure-store';
+import { deleteSecureItem, getSecureItem, setSecureItem } from '@/lib/secureStorage';
 
 jest.mock('expo-secure-store', () => ({
   getItemAsync: jest.fn(),

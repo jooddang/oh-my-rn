@@ -34,37 +34,37 @@ describe('RootLayout', () => {
     mockColorScheme = 'system';
   });
 
-  it('renders without crashing', () => {
-    render(<RootLayout />);
+  it('renders without crashing', async () => {
+    await render(<RootLayout />);
     expect(screen.getByTestId('stack-navigator')).toBeTruthy();
   });
 
-  it('renders Stack navigator with headerShown false', () => {
-    render(<RootLayout />);
+  it('renders Stack navigator with headerShown false', async () => {
+    await render(<RootLayout />);
     const stack = screen.getByTestId('stack-navigator');
     expect(stack.props.screenOptions).toEqual({ headerShown: false });
   });
 
-  it('renders StatusBar component', () => {
-    render(<RootLayout />);
+  it('renders StatusBar component', async () => {
+    await render(<RootLayout />);
     expect(screen.getByTestId('status-bar')).toBeTruthy();
   });
 
-  it('calls SplashScreen.hideAsync on mount', () => {
-    render(<RootLayout />);
+  it('calls SplashScreen.hideAsync on mount', async () => {
+    await render(<RootLayout />);
     expect(SplashScreen.hideAsync).toHaveBeenCalled();
   });
 
-  it('renders StatusBar with dark style for light theme', () => {
+  it('renders StatusBar with dark style for light theme', async () => {
     mockColorScheme = 'light';
-    render(<RootLayout />);
+    await render(<RootLayout />);
     const statusBar = screen.getByTestId('status-bar');
     expect(statusBar.props.style).toBe('dark');
   });
 
-  it('renders StatusBar with light style for dark theme', () => {
+  it('renders StatusBar with light style for dark theme', async () => {
     mockColorScheme = 'dark';
-    render(<RootLayout />);
+    await render(<RootLayout />);
     const statusBar = screen.getByTestId('status-bar');
     expect(statusBar.props.style).toBe('light');
   });

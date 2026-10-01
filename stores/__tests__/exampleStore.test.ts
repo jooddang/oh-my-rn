@@ -1,5 +1,5 @@
-import { useExampleStore } from '@/stores/exampleStore';
 import type { Item } from '@/stores/exampleStore';
+import { useExampleStore } from '@/stores/exampleStore';
 
 describe('exampleStore', () => {
   beforeEach(() => {

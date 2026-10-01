@@ -11,8 +11,8 @@ function renderWithTheme(ui: React.ReactElement) {
 }
 
 describe('Card', () => {
-  it('renders children inside card', () => {
-    renderWithTheme(
+  it('renders children inside card', async () => {
+    await renderWithTheme(
       <Card>
         <Text>Card content</Text>
       </Card>,
@@ -20,8 +20,8 @@ describe('Card', () => {
     expect(screen.getByText('Card content')).toBeTruthy();
   });
 
-  it('applies border radius from constants', () => {
-    const { toJSON } = renderWithTheme(
+  it('applies border radius from constants', async () => {
+    const { toJSON } = await renderWithTheme(
       <Card>
         <Text>Rounded</Text>
       </Card>,
@@ -30,8 +30,8 @@ describe('Card', () => {
     expect(tree).toContain(`"borderRadius":${BORDER_RADIUS}`);
   });
 
-  it('applies border', () => {
-    const { toJSON } = renderWithTheme(
+  it('applies border', async () => {
+    const { toJSON } = await renderWithTheme(
       <Card>
         <Text>Bordered</Text>
       </Card>,
@@ -40,8 +40,8 @@ describe('Card', () => {
     expect(tree).toContain('"borderWidth":1');
   });
 
-  it('applies theme background and padding', () => {
-    const { toJSON } = renderWithTheme(
+  it('applies theme background and padding', async () => {
+    const { toJSON } = await renderWithTheme(
       <Card>
         <Text>Styled</Text>
       </Card>,

@@ -10,8 +10,8 @@ function renderWithTheme(ui: React.ReactElement) {
 }
 
 describe('Screen', () => {
-  it('renders children', () => {
-    renderWithTheme(
+  it('renders children', async () => {
+    await renderWithTheme(
       <Screen>
         <Text>Hello</Text>
       </Screen>,
@@ -19,8 +19,8 @@ describe('Screen', () => {
     expect(screen.getByText('Hello')).toBeTruthy();
   });
 
-  it('renders ScrollView when scroll=true', () => {
-    const { toJSON } = renderWithTheme(
+  it('renders ScrollView when scroll=true', async () => {
+    const { toJSON } = await renderWithTheme(
       <Screen scroll>
         <Text>Scrollable</Text>
       </Screen>,
@@ -29,8 +29,8 @@ describe('Screen', () => {
     expect(tree).toContain('RCTScrollView');
   });
 
-  it('does not render ScrollView by default', () => {
-    const { toJSON } = renderWithTheme(
+  it('does not render ScrollView by default', async () => {
+    const { toJSON } = await renderWithTheme(
       <Screen>
         <Text>Static</Text>
       </Screen>,
@@ -39,8 +39,8 @@ describe('Screen', () => {
     expect(tree).not.toContain('RCTScrollView');
   });
 
-  it('applies padding by default', () => {
-    const { toJSON } = renderWithTheme(
+  it('applies padding by default', async () => {
+    const { toJSON } = await renderWithTheme(
       <Screen>
         <Text>Padded</Text>
       </Screen>,
@@ -50,8 +50,8 @@ describe('Screen', () => {
     expect(tree).toContain('"paddingHorizontal":16');
   });
 
-  it('removes padding when padding=false', () => {
-    const { toJSON } = renderWithTheme(
+  it('removes padding when padding=false', async () => {
+    const { toJSON } = await renderWithTheme(
       <Screen padding={false}>
         <Text>No pad</Text>
       </Screen>,

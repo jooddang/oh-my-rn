@@ -28,8 +28,8 @@ What actually happened.
 ## Environment
 
 - OS: [e.g., macOS 15, Windows 11, Ubuntu 24]
-- Node.js: [e.g., 20.x]
-- Expo SDK: [e.g., 54]
+- Node.js: [e.g., 24.x]
+- Expo SDK: [e.g., 57]
 - Device/Simulator: [e.g., iPhone 16 Pro Simulator, Pixel 8 Emulator]
 
 ## Screenshots

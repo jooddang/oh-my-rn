@@ -66,33 +66,33 @@ function renderWithTheme(ui: React.ReactElement, colorSchemeMode?: 'light' | 'da
 }
 
 describe('TabLayout', () => {
-  it('renders a Tabs navigator', () => {
-    renderWithTheme(<TabLayout />);
+  it('renders a Tabs navigator', async () => {
+    await renderWithTheme(<TabLayout />);
     expect(screen.getByTestId('tabs-navigator')).toBeTruthy();
   });
 
-  it('has Home and Settings tabs', () => {
-    renderWithTheme(<TabLayout />);
+  it('has Home and Settings tabs', async () => {
+    await renderWithTheme(<TabLayout />);
     expect(screen.getByTestId('tab-screen-index')).toBeTruthy();
     expect(screen.getByTestId('tab-screen-settings')).toBeTruthy();
     expect(screen.getByText('Home')).toBeTruthy();
     expect(screen.getByText('Settings')).toBeTruthy();
   });
 
-  it('renders lucide icons for each tab', () => {
-    renderWithTheme(<TabLayout />);
+  it('renders lucide icons for each tab', async () => {
+    await renderWithTheme(<TabLayout />);
     expect(screen.getByTestId('icon-house')).toBeTruthy();
     expect(screen.getByTestId('icon-settings')).toBeTruthy();
   });
 
-  it('passes icon size 24', () => {
-    renderWithTheme(<TabLayout />);
+  it('passes icon size 24', async () => {
+    await renderWithTheme(<TabLayout />);
     const houseIcon = screen.getByTestId('icon-house');
     expect(houseIcon.props.accessibilityHint).toContain('size:24');
   });
 
-  it('uses theme colors for tab bar styling in light mode', () => {
-    renderWithTheme(<TabLayout />, 'light');
+  it('uses theme colors for tab bar styling in light mode', async () => {
+    await renderWithTheme(<TabLayout />, 'light');
     const navigator = screen.getByTestId('tabs-navigator');
     const opts = JSON.parse(navigator.props.accessibilityHint);
     expect(opts.tabBarActiveTintColor).toBe('#007AFF');
@@ -101,8 +101,8 @@ describe('TabLayout', () => {
     expect(opts.headerShown).toBe(false);
   });
 
-  it('uses theme colors for tab bar styling in dark mode', () => {
-    renderWithTheme(<TabLayout />, 'dark');
+  it('uses theme colors for tab bar styling in dark mode', async () => {
+    await renderWithTheme(<TabLayout />, 'dark');
     const navigator = screen.getByTestId('tabs-navigator');
     const opts = JSON.parse(navigator.props.accessibilityHint);
     expect(opts.tabBarActiveTintColor).toBe('#007AFF');
@@ -110,8 +110,8 @@ describe('TabLayout', () => {
     expect(opts.tabBarStyle.borderTopColor).toBe('#333333');
   });
 
-  it('sets distinct active vs inactive tint colors', () => {
-    renderWithTheme(<TabLayout />, 'light');
+  it('sets distinct active vs inactive tint colors', async () => {
+    await renderWithTheme(<TabLayout />, 'light');
     const navigator = screen.getByTestId('tabs-navigator');
     const opts = JSON.parse(navigator.props.accessibilityHint);
     expect(opts.tabBarActiveTintColor).not.toBe(opts.tabBarInactiveTintColor);

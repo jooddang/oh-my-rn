@@ -1,4 +1,4 @@
-import { type Theme, darkTheme, lightTheme } from '@/lib/theme';
+import { darkTheme, lightTheme, type Theme } from '@/lib/theme';
 
 const COLOR_KEYS: (keyof Theme['colors'])[] = [
   'background',

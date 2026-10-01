@@ -1,21 +1,33 @@
 {
-  "cli": { "version": ">= 15.0.0" },
+  "cli": {
+    "version": ">= 24.0.0"
+  },
   "build": {
+    "base": {
+      "node": "24.x",
+      "env": { "EAS_REQUIRE_PROJECT_ID": "true" }
+    },
     "development": {
+      "extends": "base",
       "developmentClient": true,
       "distribution": "internal"
     },
     "development:simulator": {
+      "extends": "base",
       "developmentClient": true,
       "distribution": "internal",
       "ios": { "simulator": true }
     },
     "preview": {
-      "distribution": "internal"
+      "extends": "base",
+      "distribution": "internal",
+      "channel": "preview"
     },
     "production": {
+      "extends": "base",
       "distribution": "store",
       "autoIncrement": true,
+      "channel": "production",
       "ios": { "simulator": false },
       "android": { "buildType": "app-bundle" }
     }

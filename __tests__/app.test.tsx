@@ -11,18 +11,18 @@ function renderWithTheme(ui: React.ReactElement) {
 }
 
 describe('App smoke test', () => {
-  it('renders a Text component', () => {
-    renderWithTheme(<Text>Smoke test</Text>);
+  it('renders a Text component', async () => {
+    await renderWithTheme(<Text>Smoke test</Text>);
     expect(screen.getByText('Smoke test')).toBeTruthy();
   });
 
-  it('renders a Button component', () => {
-    renderWithTheme(<Button title="Tap me" onPress={() => {}} />);
+  it('renders a Button component', async () => {
+    await renderWithTheme(<Button title="Tap me" onPress={() => {}} />);
     expect(screen.getByText('Tap me')).toBeTruthy();
   });
 
-  it('renders multiple components together', () => {
-    renderWithTheme(
+  it('renders multiple components together', async () => {
+    await renderWithTheme(
       <View>
         <Text variant="h1">Welcome</Text>
         <Button title="Get Started" onPress={() => {}} />

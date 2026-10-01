@@ -6,7 +6,7 @@ import { Text } from '@/components/Text';
 import { useTheme } from '@/providers/ThemeProvider';
 
 const FEATURES = [
-  'Expo SDK 54 + React Native 0.81',
+  'Expo SDK 57 + React Native 0.86',
   'TypeScript strict mode',
   'File-based routing (Expo Router)',
   'Zustand state management',

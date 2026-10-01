@@ -1,15 +1,10 @@
-import type { Config } from 'jest';
-
-const config: Config = {
+/** @type {import('jest').Config} */
+const config = {
   projects: [
     {
       displayName: 'rn',
-      haste: {
-        defaultPlatform: 'ios',
-        platforms: ['android', 'ios', 'native'],
-      },
+      preset: '@react-native/jest-preset',
       testEnvironment: './jest.env.rn.js',
-      resolver: 'react-native/jest/resolver.js',
       transform: {
         '\\.[jt]sx?$': [
           'babel-jest',
@@ -24,7 +19,7 @@ const config: Config = {
       moduleNameMapper: {
         '^@/(.*)$': '<rootDir>/$1',
       },
-      setupFiles: ['react-native/jest/setup.js', './jest.setup.ts'],
+      setupFiles: ['@react-native/jest-preset/jest/setup.js', './jest.setup.ts'],
       testMatch: ['**/__tests__/**/*.test.ts?(x)'],
       testPathIgnorePatterns: ['/node_modules/', '/android/', '/ios/'],
     },
@@ -38,4 +33,4 @@ const config: Config = {
   ],
 };
 
-export default config;
+module.exports = config;

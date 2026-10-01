@@ -30,11 +30,11 @@ Fork it. Run it. Ship your idea.
 
 ---
 
-A production-ready React Native boilerplate powered by Expo SDK 54 -- clone, install, and run on both platforms in under a minute.
+A production-ready React Native boilerplate powered by Expo SDK 57 -- clone, install, and run on both platforms in under a minute.
 
 ## Prerequisites
 
-- **Node.js** 20+ LTS ([download](https://nodejs.org/))
+- **Node.js** 24+ LTS ([download](https://nodejs.org/))
 - **npm** (comes with Node.js)
 - **iOS**: [Xcode](https://developer.apple.com/xcode/) with Command Line Tools and an iOS Simulator runtime installed (macOS only)
 - **Android**: [Android Studio](https://developer.android.com/studio) with an emulator configured
@@ -63,6 +63,7 @@ A production-ready React Native boilerplate powered by Expo SDK 54 -- clone, ins
 git clone https://github.com/YOUR_USERNAME/oh-my-rn.git
 cd oh-my-rn
 npm install
+cp .env.example .env
 npm start
 ```
 
@@ -82,6 +83,8 @@ npm run ios            # Start and open iOS simulator directly
 npm run android        # Start and open Android emulator directly
 ```
 
+`npm start` intentionally uses Expo Go. The template also includes `expo-dev-client`; use `npm run start:dev-client` when you need a custom native development build.
+
 ### Native Build (when you need native modules)
 
 Runs `expo prebuild` + Xcode/Gradle build. Required when using libraries with native code not supported by Expo Go.
@@ -97,15 +100,18 @@ npx expo run:android   # Build and run on Android emulator
 
 | Script | Command | Description |
 |--------|---------|-------------|
-| `npm start` | `expo start` | Start the Expo dev server |
-| `npm run ios` | `expo start --ios` | Start and open on iOS simulator (Expo Go) |
-| `npm run android` | `expo start --android` | Start and open on Android emulator (Expo Go) |
+| `npm start` | `expo start --go` | Start the Expo dev server for Expo Go |
+| `npm run start:dev-client` | `expo start --dev-client` | Start for an installed development build |
+| `npm run ios` | `expo start --go --ios` | Start and open on iOS simulator (Expo Go) |
+| `npm run android` | `expo start --go --android` | Start and open on Android emulator (Expo Go) |
 | `npm run web` | `expo start --web` | Start for web browser |
 | `npm test` | `jest` | Run unit tests |
 | `npm run lint` | `biome check .` | Lint all source files |
 | `npm run lint:fix` | `biome check --write .` | Lint and auto-fix |
 | `npm run format` | `biome format --write .` | Format all source files |
 | `npm run typecheck` | `tsc --noEmit` | Run TypeScript type checking |
+| `npm run update:preview` | `EXPO_NO_DOTENV=1 eas update --channel preview --environment preview` | Publish a preview OTA update |
+| `npm run update:production` | `EXPO_NO_DOTENV=1 eas update --channel production --environment production` | Publish a production OTA update |
 
 ## Project Structure
 
@@ -150,7 +156,7 @@ oh-my-rn/
 ├── eas.json                      # EAS Build profiles
 ├── tsconfig.json                 # TypeScript configuration
 ├── biome.json                    # Biome linter/formatter config
-├── jest.config.ts                # Jest test configuration
+├── jest.config.cjs                # Jest test configuration
 └── package.json                  # Dependencies and scripts
 ```
 
@@ -158,15 +164,16 @@ oh-my-rn/
 
 | Layer | Technology | Version |
 |-------|-----------|---------|
-| Runtime | React Native | 0.81.x |
-| Framework | Expo | SDK 54 |
-| Language | TypeScript | ~5.8 (strict mode) |
+| Runtime | React Native | 0.86.x |
+| Framework | Expo | SDK 57 |
+| Language | TypeScript | ~6.0 (strict mode) |
 | UI Framework | React | 19.x |
-| Navigation | Expo Router | v6 (file-based) |
+| Navigation | Expo Router | SDK 57 (file-based) |
 | State Management | Zustand | v5 (with persist middleware) |
 | Storage (general) | AsyncStorage | v2 |
-| Storage (secure) | expo-secure-store | v15 |
+| Storage (secure) | expo-secure-store | 57.x |
 | Icons | lucide-react-native | latest |
+| OTA updates | expo-updates + EAS Update | SDK 57 |
 | Testing | Jest + @testing-library/react-native | latest |
 | Linting/Formatting | Biome | latest |
 | Git Hooks | Husky + lint-staged | latest |
@@ -175,6 +182,7 @@ oh-my-rn/
 
 - **Expo Managed Workflow** -- zero native toolchain setup; `npm start` just works
 - **Expo Router** -- file-based routing with automatic deep linking
+- **EAS Update** -- automatic OTA delivery for JavaScript and asset changes
 - **Zustand** -- lightweight state management (~1KB) with persistence
 - **StyleSheet.create** -- native styling, no CSS-in-JS overhead
 - **Biome** -- 100x faster than ESLint+Prettier, unified linting and formatting
@@ -258,6 +266,53 @@ Build profiles are configured in [`eas.json`](eas.json):
 - **development:simulator** -- development client for iOS simulator
 - **preview** -- internal distribution for testing
 - **production** -- store distribution with auto-incrementing build numbers
+
+## Over-the-Air Updates
+
+This template includes [EAS Update](https://docs.expo.dev/eas-update/introduction/) through `expo-updates`. OTA updates can ship JavaScript and asset changes without a new app-store submission; native dependency or native configuration changes still require a new EAS build.
+
+1. Create or link an EAS project. EAS writes the non-secret project ID to `extra.eas.projectId` in `app.json`:
+
+   ```bash
+   eas init
+   ```
+
+   The EAS build profiles fail configuration if this ID is still empty. The local `.env` file keeps development working after project linking.
+
+2. Define `API_URL` and `APP_ENV` in every EAS environment used for builds and updates. The update scripts set `EXPO_NO_DOTENV=1`, so publishing always uses EAS environment variables and cannot accidentally read a developer's local `.env` file:
+
+   ```bash
+   eas env:set --name API_URL --value http://localhost:3000 --environment development --visibility plaintext
+   eas env:set --name APP_ENV --value development --environment development --visibility plaintext
+   eas env:set --name API_URL --value https://preview.example.com --environment preview --visibility plaintext
+   eas env:set --name APP_ENV --value staging --environment preview --visibility plaintext
+   eas env:set --name API_URL --value https://example.com --environment production --visibility plaintext
+   eas env:set --name APP_ENV --value production --environment production --visibility plaintext
+   ```
+
+3. Verify that the final config contains a fingerprint runtime and an update URL:
+
+   ```bash
+   npx expo config --type public
+   ```
+
+4. Build a preview or production app. The build embeds the update runtime and receives updates from its configured channel.
+
+   ```bash
+   eas build --profile preview --platform all
+   ```
+
+5. Publish a JavaScript or asset update:
+
+   ```bash
+   npm run update:preview -- --message "Update home screen"
+   ```
+
+Release builds check EAS Update on launch and download compatible updates in the background. A downloaded update is applied on the next cold start, so a user may need to open the app twice to see a hotfix.
+
+The `fingerprint` runtime policy prevents an update from being offered to a build whose native runtime changed. `fingerprint.config.js` excludes Expo’s `extra` section because those values are delivered with the update manifest; this keeps `API_URL` and `APP_ENV` differences from creating an incompatible runtime fingerprint.
+
+For high-assurance production releases, add [update code signing](https://docs.expo.dev/eas-update/code-signing/) so devices reject unsigned manifests.
 
 ## Contributing
 

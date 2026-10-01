@@ -2,7 +2,7 @@ import type React from 'react';
 import { createContext, useCallback, useContext, useMemo } from 'react';
 import { useColorScheme } from 'react-native';
 
-import { type ColorSchemeMode, type Theme, darkTheme, lightTheme } from '@/lib/theme';
+import { type ColorSchemeMode, darkTheme, lightTheme, type Theme } from '@/lib/theme';
 
 type ThemeContextValue = {
   theme: Theme;
@@ -20,6 +20,17 @@ type ThemeProviderProps = {
 
 const CYCLE_ORDER: ColorSchemeMode[] = ['system', 'light', 'dark'];
 
+function getEffectiveScheme(
+  colorSchemeMode: ColorSchemeMode,
+  systemColorScheme: ReturnType<typeof useColorScheme>,
+): 'light' | 'dark' {
+  if (colorSchemeMode !== 'system') {
+    return colorSchemeMode;
+  }
+
+  return systemColorScheme === 'dark' ? 'dark' : 'light';
+}
+
 export function ThemeProvider({
   children,
   colorSchemeMode = 'system',
@@ -27,8 +38,7 @@ export function ThemeProvider({
 }: ThemeProviderProps): React.JSX.Element {
   const systemColorScheme = useColorScheme();
 
-  const effectiveScheme: 'light' | 'dark' =
-    colorSchemeMode === 'system' ? (systemColorScheme ?? 'light') : colorSchemeMode;
+  const effectiveScheme = getEffectiveScheme(colorSchemeMode, systemColorScheme);
 
   const theme = effectiveScheme === 'dark' ? darkTheme : lightTheme;
 

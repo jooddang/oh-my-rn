@@ -33,34 +33,34 @@ function renderWithTheme(ui: React.ReactElement, colorSchemeMode?: 'light' | 'da
 }
 
 describe('NotFoundScreen', () => {
-  it('renders without crashing', () => {
-    renderWithTheme(<NotFoundScreen />);
+  it('renders without crashing', async () => {
+    await renderWithTheme(<NotFoundScreen />);
     expect(screen.getByText('Page Not Found')).toBeTruthy();
   });
 
-  it('displays the "Page Not Found" heading', () => {
-    renderWithTheme(<NotFoundScreen />);
+  it('displays the "Page Not Found" heading', async () => {
+    await renderWithTheme(<NotFoundScreen />);
     expect(screen.getByText('Page Not Found')).toBeTruthy();
   });
 
-  it('displays a helpful message', () => {
-    renderWithTheme(<NotFoundScreen />);
+  it('displays a helpful message', async () => {
+    await renderWithTheme(<NotFoundScreen />);
     expect(screen.getByText(/doesn't exist or has been moved/)).toBeTruthy();
   });
 
-  it('provides a link to navigate back to Home', () => {
-    renderWithTheme(<NotFoundScreen />);
+  it('provides a link to navigate back to Home', async () => {
+    await renderWithTheme(<NotFoundScreen />);
     expect(screen.getByText('Go back to Home')).toBeTruthy();
   });
 
-  it('renders correctly in light mode', () => {
-    renderWithTheme(<NotFoundScreen />, 'light');
+  it('renders correctly in light mode', async () => {
+    await renderWithTheme(<NotFoundScreen />, 'light');
     expect(screen.getByText('Page Not Found')).toBeTruthy();
     expect(screen.getByText('Go back to Home')).toBeTruthy();
   });
 
-  it('renders correctly in dark mode', () => {
-    renderWithTheme(<NotFoundScreen />, 'dark');
+  it('renders correctly in dark mode', async () => {
+    await renderWithTheme(<NotFoundScreen />, 'dark');
     expect(screen.getByText('Page Not Found')).toBeTruthy();
     expect(screen.getByText('Go back to Home')).toBeTruthy();
   });
